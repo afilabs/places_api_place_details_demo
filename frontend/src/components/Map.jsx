@@ -1,30 +1,24 @@
 import React, { useEffect } from "react";
-import { Map as GMap, Marker, useMap } from "@vis.gl/react-google-maps";
+import { Map as GMap, useMap } from "@vis.gl/react-google-maps";
+import Marker from "./Marker";
 
-const Map = ({ selectedPlace }) => {
-  const map = useMap();
+const Map = ({ place }) => {
+  const mapInstance = useMap();
 
   useEffect(() => {
-    if (selectedPlace && map) {
-      const { latitude, longitude } = selectedPlace;
-      map.panTo({ lat: latitude, lng: longitude });
+    if (place && mapInstance) {
+      const { latitude, longitude } = place;
+      mapInstance.panTo({ lat: latitude, lng: longitude });
     }
-  }, [selectedPlace, map]);
+  }, [place, mapInstance]);
 
   return (
     <GMap
       defaultCenter={{ lat: 49.2569501547411, lng: -123.11058970045666 }}
-      defaultZoom={12}
+      defaultZoom={16}
       disableDefaultUI
     >
-      {selectedPlace && (
-        <Marker
-          position={{
-            lat: selectedPlace.latitude,
-            lng: selectedPlace.longitude,
-          }}
-        />
-      )}
+      {place && <Marker place={place} />}
     </GMap>
   );
 };
