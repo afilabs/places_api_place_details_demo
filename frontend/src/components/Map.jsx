@@ -15,7 +15,7 @@ const Map = ({ place }) => {
   return (
     <GMap
       defaultCenter={{ lat: 49.2569501547411, lng: -123.11058970045666 }}
-      defaultZoom={16}
+      defaultZoom={12}
       disableDefaultUI
     >
       {place && <Marker place={place} />}

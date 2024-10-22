@@ -11,10 +11,12 @@ const App = () => {
   const handlePlaceSelection = async (placeResult) => {
     try {
       const locationName = placeResult.name;
+      const locationPlaceID = placeResult.place_id
+
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URI}/place-details`,
         {
-          params: { locationName },
+          params: { locationName, locationPlaceID },
         }
       );
 
@@ -35,7 +37,7 @@ const App = () => {
     } catch (error) {
       console.error("Error fetching place details:", error);
     }
-  };
+  }; 
 
   return (
     <div className="app">

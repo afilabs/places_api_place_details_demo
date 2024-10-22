@@ -2,31 +2,17 @@
 const axios = require("axios");
 
 const getPlaceDetails = async (req, res) => {
-  const { locationName } = req.query;
+  const { locationPlaceID } = req.query;
   const apiKey = process.env.GOOGLE_API_KEY;
-  const textSearchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
-    locationName
-  )}&key=${apiKey}`;
-
+ 
   try {
-    // Step 1: Search for the place using its name
-    const textSearchResponse = await axios.get(textSearchUrl);
-    const { results } = textSearchResponse.data;
 
-    if (results.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No results found for the provided location name." });
-    }
-
-    const placeId = results[0].place_id;
-
-    // Step 2: Retrieve place details using Place ID
-    const placeDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${apiKey}`;
+    // Step 1: Retrieve place details using Place ID
+    const placeDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${locationPlaceID}&key=${apiKey}`;
     const placeDetailsResponse = await axios.get(placeDetailsUrl);
     const placeDetails = placeDetailsResponse.data.result;
 
-    // Step 3: Extract the necessary information
+    // Step 2: Extract the necessary information
     const placeInfo = {
       name: placeDetails.name,
       rating: placeDetails.rating,
